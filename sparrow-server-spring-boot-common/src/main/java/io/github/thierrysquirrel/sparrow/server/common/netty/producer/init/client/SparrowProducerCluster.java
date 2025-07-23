@@ -43,7 +43,8 @@ public class SparrowProducerCluster {
         List<SparrowProducer> sparrowProducerList = SPARROW_PRODUCER.computeIfAbsent(topic, key -> createSparrowProducerList(clusterUrl, topic));
         int increment = SPARROW_PRODUCER_OFFSET.computeIfAbsent(topic, key -> new AtomicInteger()).incrementAndGet();
         int offset = increment % sparrowProducerList.size();
-        return sparrowProducerList.get(offset);
+        int positiveOffset=(offset+sparrowProducerList.size())% sparrowProducerList.size();
+        return sparrowProducerList.get(positiveOffset);
     }
 
 
