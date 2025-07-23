@@ -29,8 +29,8 @@ Final consistency
 <!--Adding dependencies to pom. XML-->
 <dependency>
     <artifactId>sparrow-server-spring-boot-starter</artifactId>
-    <groupId>com.github.thierrysquirrel</groupId>
-    <version>2.3.0.0-RELEASE</version>
+    <groupId>io.github.thierrysquirrel</groupId>
+    <version>2.4.0.0-RELEASE</version>
 </dependency>
 ``` 
 
