@@ -11,6 +11,7 @@
 
     <name>sparrow-server-spring-boot</name>
     <description>sparrow-server-spring-boot</description>
+    <url>https://github.com/ThierrySquirrel/sparrow-server-spring-boot</url>
 
     <modules>
         <module>sparrow-server-spring-boot-autoconfigure</module>
