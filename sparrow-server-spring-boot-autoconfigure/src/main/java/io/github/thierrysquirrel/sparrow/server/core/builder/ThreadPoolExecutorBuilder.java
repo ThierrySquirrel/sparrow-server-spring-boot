@@ -15,10 +15,9 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.core.builder;
 
+import io.github.thierrysquirrel.jellyfish.thread.pool.ThreadPool;
+import io.github.thierrysquirrel.jellyfish.thread.scheduled.one.ThreadScheduledOne;
 import io.github.thierrysquirrel.sparrow.server.core.builder.constant.ThreadPoolExecutorBuilderConstant;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-
-import java.util.concurrent.*;
 
 /**
  * ClassName: ThreadPoolExecutorBuilder
@@ -33,55 +32,24 @@ public class ThreadPoolExecutorBuilder {
     private ThreadPoolExecutorBuilder() {
     }
 
-    public static ThreadPoolExecutor builderSparrowServerEventThreadPoolExecutor() {
-        ThreadFactory threadFactory = new ThreadFactoryBuilder()
-                .setNameFormat(ThreadPoolExecutorBuilderConstant.SPARROW_SERVER_EVENT).build();
-        return new ThreadPoolExecutor(ThreadPoolExecutorBuilderConstant.SPARROW_SERVER_EVENT_CORE_POOL_SIZE,
-                ThreadPoolExecutorBuilderConstant.SPARROW_SERVER_EVENT_MAXIMUM_POOL_SIZE,
-                ThreadPoolExecutorBuilderConstant.KEEP_ALIVE_TIME,
-                TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(),
-                threadFactory,
-                new ThreadPoolExecutor.AbortPolicy()
-        );
+    public static ThreadPool builderSparrowServerEventThreadPoolExecutor() {
+        int corePoolSize = ThreadPoolExecutorBuilderConstant.SPARROW_SERVER_EVENT_CORE_POOL_SIZE;
+
+        return new ThreadPool(corePoolSize);
     }
 
-    public static ThreadPoolExecutor builderSparrowServerInitializationThreadPoolExecutor() {
-        ThreadFactory threadFactory = new ThreadFactoryBuilder()
-                .setNameFormat(ThreadPoolExecutorBuilderConstant.SPARROW_SERVER_INITIALIZATION).build();
-        return new ThreadPoolExecutor(ThreadPoolExecutorBuilderConstant.SPARROW_SERVER_INITIALIZATION_CORE_POOL_SIZE,
-                ThreadPoolExecutorBuilderConstant.SPARROW_SERVER_INITIALIZATION_MAXIMUM_POOL_SIZE,
-                ThreadPoolExecutorBuilderConstant.KEEP_ALIVE_TIME,
-                TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(),
-                threadFactory,
-                new ThreadPoolExecutor.AbortPolicy()
-        );
+
+    public static ThreadPool builderAsyncSparrowMessageServiceThreadPoolExecutor() {
+        int corePoolSize = ThreadPoolExecutorBuilderConstant.ASYNC_SPARROW_MESSAGE_SERVICE_CORE_POOL_SIZE;
+        return new ThreadPool(corePoolSize);
     }
 
-    public static ThreadPoolExecutor builderAsyncSparrowMessageServiceThreadPoolExecutor() {
-        ThreadFactory threadFactory = new ThreadFactoryBuilder()
-                .setNameFormat(ThreadPoolExecutorBuilderConstant.ASYNC_SPARROW_MESSAGE_SERVICE).build();
-        return new ThreadPoolExecutor(ThreadPoolExecutorBuilderConstant.ASYNC_SPARROW_MESSAGE_SERVICE_CORE_POOL_SIZE,
-                ThreadPoolExecutorBuilderConstant.ASYNC_SPARROW_MESSAGE_SERVICE_MAXIMUM_POOL_SIZE,
-                ThreadPoolExecutorBuilderConstant.KEEP_ALIVE_TIME,
-                TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(),
-                threadFactory,
-                new ThreadPoolExecutor.AbortPolicy()
-        );
+    public static ThreadScheduledOne builderFlushTimeoutMessageThreadPoolExecutor() {
+        return new ThreadScheduledOne();
     }
 
-    public static ScheduledThreadPoolExecutor builderFlushTimeoutMessageThreadPoolExecutor() {
-        ThreadFactory threadFactory = new ThreadFactoryBuilder()
-                .setNameFormat(ThreadPoolExecutorBuilderConstant.FLUSH_TIMEOUT_MESSAGE).build();
-        return new ScheduledThreadPoolExecutor(ThreadPoolExecutorBuilderConstant.FLUSH_TIMEOUT_MESSAGE_CORE_POOL_SIZE, threadFactory);
-    }
-
-    public static ScheduledThreadPoolExecutor builderDeleteTimeoutMessageThreadPoolExecutor() {
-        ThreadFactory threadFactory = new ThreadFactoryBuilder()
-                .setNameFormat(ThreadPoolExecutorBuilderConstant.DELETE_TIMEOUT_MESSAGE).build();
-        return new ScheduledThreadPoolExecutor(ThreadPoolExecutorBuilderConstant.DELETE_TIMEOUT_MESSAGE_CORE_POOL_SIZE, threadFactory);
+    public static ThreadScheduledOne builderDeleteTimeoutMessageThreadPoolExecutor() {
+        return new ThreadScheduledOne();
     }
 
 }

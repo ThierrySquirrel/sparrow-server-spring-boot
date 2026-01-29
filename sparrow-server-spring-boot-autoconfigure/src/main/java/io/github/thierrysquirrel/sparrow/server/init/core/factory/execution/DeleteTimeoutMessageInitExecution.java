@@ -15,13 +15,11 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.init.core.factory.execution;
 
+import io.github.thierrysquirrel.jellyfish.thread.scheduled.one.ThreadScheduledOne;
 import io.github.thierrysquirrel.sparrow.server.core.constant.ThreadPoolExecutorConstant;
 import io.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
 import io.github.thierrysquirrel.sparrow.server.init.core.constant.DeleteTimeoutMessageInitConstant;
 import io.github.thierrysquirrel.sparrow.server.init.core.thread.execution.DeleteTimeoutMessageExecution;
-
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * ClassName: DeleteTimeoutMessageInitExecution
@@ -37,7 +35,7 @@ public class DeleteTimeoutMessageInitExecution {
 
     public static void deleteTimeoutMessage(SparrowMessageService sparrowMessageService) {
         DeleteTimeoutMessageExecution deleteTimeoutMessageExecution = new DeleteTimeoutMessageExecution(sparrowMessageService);
-        ScheduledThreadPoolExecutor deleteTimeoutMessage = ThreadPoolExecutorConstant.DELETE_TIMEOUT_MESSAGE;
-        deleteTimeoutMessage.scheduleWithFixedDelay(deleteTimeoutMessageExecution, DeleteTimeoutMessageInitConstant.INITIAL_DELAY, DeleteTimeoutMessageInitConstant.DELAY, TimeUnit.MILLISECONDS);
+        ThreadScheduledOne deleteTimeoutMessage = ThreadPoolExecutorConstant.DELETE_TIMEOUT_MESSAGE;
+        deleteTimeoutMessage.execute(deleteTimeoutMessageExecution, DeleteTimeoutMessageInitConstant.DELAY);
     }
 }

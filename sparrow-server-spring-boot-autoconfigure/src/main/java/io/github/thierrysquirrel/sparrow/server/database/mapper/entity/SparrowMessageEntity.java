@@ -15,8 +15,7 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.database.mapper.entity;
 
-import lombok.Data;
-
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -27,7 +26,6 @@ import java.util.Date;
  * @author ThierrySquirrel
  * @since JDK21
  **/
-@Data
 public class SparrowMessageEntity {
     private Long id;
     private String topic;
@@ -35,4 +33,64 @@ public class SparrowMessageEntity {
     private Byte isDeleted;
     private Date gmtCreate;
     private Date gmtModified;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public byte[] getMessage() {
+        return message;
+    }
+
+    public void setMessage(byte[] message) {
+        this.message = message;
+    }
+
+    public Byte getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Byte isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    @Override
+    public String toString() {
+        return "SparrowMessageEntity{" +
+                "id=" + id +
+                ", topic='" + topic + '\'' +
+                ", message=" + Arrays.toString(message) +
+                ", isDeleted=" + isDeleted +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                '}';
+    }
 }

@@ -15,13 +15,12 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.init.core.factory.execution;
 
+import io.github.thierrysquirrel.jellyfish.thread.scheduled.one.ThreadScheduledOne;
 import io.github.thierrysquirrel.sparrow.server.core.constant.ThreadPoolExecutorConstant;
 import io.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
 import io.github.thierrysquirrel.sparrow.server.init.core.constant.FlushTimeoutMessageInitConstant;
 import io.github.thierrysquirrel.sparrow.server.init.core.thread.execution.FlushTimeoutMessageThreadExecution;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * ClassName: FlushTimeoutMessageInitExecution
@@ -37,7 +36,7 @@ public class FlushTimeoutMessageInitExecution {
 
     public static void flush(SparrowMessageService sparrowMessageService) {
         FlushTimeoutMessageThreadExecution flushTimeoutMessageThreadExecution = new FlushTimeoutMessageThreadExecution(sparrowMessageService);
-        ScheduledThreadPoolExecutor flushTimeoutMessage = ThreadPoolExecutorConstant.FLUSH_TIMEOUT_MESSAGE;
-        flushTimeoutMessage.scheduleWithFixedDelay(flushTimeoutMessageThreadExecution, FlushTimeoutMessageInitConstant.INITIAL_DELAY, FlushTimeoutMessageInitConstant.DELAY, TimeUnit.MILLISECONDS);
+        ThreadScheduledOne flushTimeoutMessage = ThreadPoolExecutorConstant.FLUSH_TIMEOUT_MESSAGE;
+        flushTimeoutMessage.execute(flushTimeoutMessageThreadExecution, FlushTimeoutMessageInitConstant.DELAY);
     }
 }

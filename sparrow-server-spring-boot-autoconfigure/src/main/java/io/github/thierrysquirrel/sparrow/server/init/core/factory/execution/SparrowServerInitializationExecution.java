@@ -15,10 +15,7 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.init.core.factory.execution;
 
-import io.github.thierrysquirrel.sparrow.server.core.constant.ThreadPoolExecutorConstant;
 import io.github.thierrysquirrel.sparrow.server.init.core.thread.execution.SparrowServerInitializationThreadExecution;
-
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * ClassName: SparrowServerInitializationExecution
@@ -34,8 +31,6 @@ public class SparrowServerInitializationExecution {
 
     public static void initialization(String url) {
         SparrowServerInitializationThreadExecution initialization = new SparrowServerInitializationThreadExecution(url);
-        ThreadPoolExecutor sparrowServerInitialization = ThreadPoolExecutorConstant.SPARROW_SERVER_INITIALIZATION;
-        sparrowServerInitialization.execute(initialization);
-        sparrowServerInitialization.shutdown();
+        new Thread(initialization).start();
     }
 }

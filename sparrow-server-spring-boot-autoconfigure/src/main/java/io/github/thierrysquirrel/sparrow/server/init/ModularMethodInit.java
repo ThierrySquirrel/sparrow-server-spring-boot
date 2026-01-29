@@ -16,9 +16,9 @@
 package io.github.thierrysquirrel.sparrow.server.init;
 
 import io.github.thierrysquirrel.sparrow.server.init.core.factory.execution.ModularMethodInitFactoryExecution;
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.lang.NonNull;
 
 /**
  * ClassName: ModularMethodInit

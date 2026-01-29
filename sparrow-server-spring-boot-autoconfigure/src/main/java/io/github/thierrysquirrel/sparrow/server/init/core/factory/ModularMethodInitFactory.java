@@ -16,11 +16,11 @@
 package io.github.thierrysquirrel.sparrow.server.init.core.factory;
 
 import io.github.thierrysquirrel.sparrow.server.annotation.SparrowServerModular;
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Event;
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Modular;
-import io.github.thierrysquirrel.sparrow.server.netty.core.container.ModularMethodContainer;
-import io.github.thierrysquirrel.sparrow.server.netty.core.domain.ModularMethod;
-import io.github.thierrysquirrel.sparrow.server.netty.core.domain.builder.ModularMethodBuilder;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.constant.Event;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.constant.Modular;
+import io.github.thierrysquirrel.sparrow.server.hummingbird.core.container.ModularMethodContainer;
+import io.github.thierrysquirrel.sparrow.server.hummingbird.core.domain.ModularMethod;
+import io.github.thierrysquirrel.sparrow.server.hummingbird.core.domain.builder.ModularMethodBuilder;
 
 import java.lang.reflect.Method;
 

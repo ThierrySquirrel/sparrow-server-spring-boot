@@ -24,7 +24,7 @@ package io.github.thierrysquirrel.sparrow.server.core.container.constant;
  * @since JDK21
  **/
 public final class ConsumerMessageQueryConstant {
-    public static final int CAPACITY = 65536;
+    public static final int CAPACITY = Runtime.getRuntime().availableProcessors() * 2;
     public static final int LIST_MESSAGE_NUMBER = 64;
 
     private ConsumerMessageQueryConstant() {

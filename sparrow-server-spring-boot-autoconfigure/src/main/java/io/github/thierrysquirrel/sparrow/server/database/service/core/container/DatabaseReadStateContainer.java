@@ -15,9 +15,8 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.database.service.core.container;
 
-import com.google.common.collect.Maps;
-
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -29,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since JDK21
  **/
 public class DatabaseReadStateContainer {
-    private static final Map<String, AtomicBoolean> DATABASE_READ_STATE = Maps.newConcurrentMap();
+    private static final Map<String, AtomicBoolean> DATABASE_READ_STATE = new ConcurrentHashMap<>();
 
     private DatabaseReadStateContainer() {
     }

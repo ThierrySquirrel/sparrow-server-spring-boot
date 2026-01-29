@@ -1,0 +1,48 @@
+/**
+ * Copyright 2024/8/9 ThierrySquirrel
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+package io.github.thierrysquirrel.sparrow.server.common.hummingbird.consumer.init.client.core.container;
+
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * ClassName: MessageNumberContainer
+ * Description:
+ * Date:2024/8/9
+ *
+ * @author ThierrySquirrel
+ * @since JDK21
+ **/
+public class MessageNumberContainer {
+    private static final Map<String, AtomicInteger> MESSAGE_NUMBER = new ConcurrentHashMap<>();
+
+    private MessageNumberContainer() {
+    }
+
+    public static void addMessageNumber(String topic, int offset) {
+        MESSAGE_NUMBER.computeIfAbsent(topic, key -> new AtomicInteger()).addAndGet(offset);
+    }
+
+    public static void decrement(String topic) {
+        MESSAGE_NUMBER.get(topic).decrementAndGet();
+    }
+
+    public static int getMessageNumber(String topic) {
+        return MESSAGE_NUMBER.computeIfAbsent(topic, key -> new AtomicInteger()).get();
+    }
+}

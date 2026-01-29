@@ -15,6 +15,7 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.database.service.core.execution;
 
+import io.github.thierrysquirrel.jellyfish.thread.pool.ThreadPool;
 import io.github.thierrysquirrel.sparrow.server.core.constant.ThreadPoolExecutorConstant;
 import io.github.thierrysquirrel.sparrow.server.database.mapper.entity.SparrowMessageEntity;
 import io.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
@@ -22,7 +23,6 @@ import io.github.thierrysquirrel.sparrow.server.database.service.core.thread.exe
 import io.github.thierrysquirrel.sparrow.server.database.service.core.thread.execution.AsyncSaveAllThreadExecution;
 
 import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * ClassName: SparrowMessageServiceFactory
@@ -38,13 +38,13 @@ public class SparrowMessageServiceExecution {
 
     public static void asyncSaveAll(SparrowMessageService sparrowMessageService, List<SparrowMessageEntity> sparrowMessageEntityList, String topic) {
         AsyncSaveAllThreadExecution asyncSaveAllThreadExecution = new AsyncSaveAllThreadExecution(sparrowMessageService, sparrowMessageEntityList, topic);
-        ThreadPoolExecutor asyncSparrowMessageService = ThreadPoolExecutorConstant.ASYNC_SPARROW_MESSAGE_SERVICE;
+        ThreadPool asyncSparrowMessageService = ThreadPoolExecutorConstant.ASYNC_SPARROW_MESSAGE_SERVICE;
         asyncSparrowMessageService.execute(asyncSaveAllThreadExecution);
     }
 
     public static void asyncFindAllByTopic(SparrowMessageService sparrowMessageService, String topic) {
         AsyncFindAllByTopicThreadExecution asyncFindAllByTopicThreadExecution = new AsyncFindAllByTopicThreadExecution(sparrowMessageService, topic);
-        ThreadPoolExecutor asyncSparrowMessageService = ThreadPoolExecutorConstant.ASYNC_SPARROW_MESSAGE_SERVICE;
+        ThreadPool asyncSparrowMessageService = ThreadPoolExecutorConstant.ASYNC_SPARROW_MESSAGE_SERVICE;
         asyncSparrowMessageService.execute(asyncFindAllByTopicThreadExecution);
     }
 }

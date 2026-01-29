@@ -15,14 +15,14 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.modular;
 
+import io.github.thierrysquirrel.hummingbird.core.facade.SocketChannelFacade;
 import io.github.thierrysquirrel.sparrow.server.annotation.SparrowServerEvent;
 import io.github.thierrysquirrel.sparrow.server.annotation.SparrowServerModular;
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowRequestContext;
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Event;
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Modular;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.SparrowRequestContext;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.constant.Event;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.constant.Modular;
 import io.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
 import io.github.thierrysquirrel.sparrow.server.modular.execution.MessageModularExecution;
-import io.netty.channel.ChannelHandlerContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -42,17 +42,17 @@ public class MessageModular {
     private SparrowMessageService sparrowMessageService;
 
     @SparrowServerEvent(event = Event.POST_MESSAGE)
-    public void postMessage(ChannelHandlerContext ctx, SparrowRequestContext msg, String topic, byte[] message) {
+    public void postMessage(SocketChannelFacade<SparrowRequestContext> ctx, SparrowRequestContext msg, String topic, byte[] message) {
         MessageModularExecution.postMessage(sparrowMessageService, topic, message);
     }
 
     @SparrowServerEvent(event = Event.PULL_MESSAGE)
-    public void pullMessage(ChannelHandlerContext ctx, SparrowRequestContext msg, Integer requestOffset, String topic) {
+    public void pullMessage(SocketChannelFacade<SparrowRequestContext> ctx, SparrowRequestContext msg, Integer requestOffset, String topic) {
         MessageModularExecution.pullMessage(ctx, sparrowMessageService, requestOffset, topic);
     }
 
     @SparrowServerEvent(event = Event.CONFIRM_CONSUMPTION)
-    public void confirmConsumption(ChannelHandlerContext ctx, SparrowRequestContext msg, List<Long> idList) {
+    public void confirmConsumption(SocketChannelFacade<SparrowRequestContext> ctx, SparrowRequestContext msg, List<Long> idList) {
         MessageModularExecution.confirmConsumption(sparrowMessageService, idList);
     }
 }

@@ -15,7 +15,7 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.annotation;
 
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Event;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.constant.Event;
 
 import java.lang.annotation.*;
 

@@ -15,7 +15,7 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.database.service;
 
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.SparrowMessage;
 import io.github.thierrysquirrel.sparrow.server.core.container.ConsumerMessageQuery;
 import io.github.thierrysquirrel.sparrow.server.core.container.constant.ConsumerMessageQueryConstant;
 import io.github.thierrysquirrel.sparrow.server.core.utils.DomainUtils;
@@ -24,10 +24,10 @@ import io.github.thierrysquirrel.sparrow.server.database.mapper.entity.SparrowMe
 import io.github.thierrysquirrel.sparrow.server.database.service.core.constant.SparrowMessageServiceConstant;
 import io.github.thierrysquirrel.sparrow.server.database.service.core.container.DatabaseReadStateContainer;
 import io.github.thierrysquirrel.sparrow.server.database.service.core.utils.DateUtils;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,10 +67,8 @@ public class SparrowMessageService {
             return;
         }
         List<SparrowMessage> sparrowMessageList = DomainUtils.convertList(sparrowMessageEntityList, SparrowMessage.class);
-        List<List<SparrowMessage>> messageLists = Lists.partition(sparrowMessageList, ConsumerMessageQueryConstant.LIST_MESSAGE_NUMBER);
-        for (List<SparrowMessage> messageList : messageLists) {
-            ConsumerMessageQuery.putMessage(topic, messageList);
-        }
+
+        listPartition(sparrowMessageList, topic);
 
         DatabaseReadStateContainer.tryCloseDatabaseRead(topic);
     }
@@ -79,5 +77,19 @@ public class SparrowMessageService {
         sparrowMessageMapper.updateAllById(idList, SparrowMessageServiceConstant.IS_DELETE);
     }
 
+    public static void listPartition(List<SparrowMessage> listAll, String topic) {
+        List<SparrowMessage> thisList = new ArrayList<>();
+        int partition = 0;
+        for (SparrowMessage value : listAll) {
+            partition++;
+
+            if (partition >= ConsumerMessageQueryConstant.LIST_MESSAGE_NUMBER) {
+                partition = 0;
+                ConsumerMessageQuery.putMessage(topic, thisList);
+                thisList = new ArrayList<>();
+            }
+            thisList.add(value);
+        }
+    }
 
 }

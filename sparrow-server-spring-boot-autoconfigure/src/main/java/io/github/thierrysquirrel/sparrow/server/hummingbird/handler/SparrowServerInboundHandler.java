@@ -1,0 +1,55 @@
+/**
+ * Copyright 2024/8/9 ThierrySquirrel
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+package io.github.thierrysquirrel.sparrow.server.hummingbird.handler;
+
+import io.github.thierrysquirrel.hummingbird.core.facade.SocketChannelFacade;
+import io.github.thierrysquirrel.hummingbird.core.handler.HummingbirdHandler;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.SparrowRequestContext;
+import io.github.thierrysquirrel.sparrow.server.hummingbird.handler.execution.SparrowServerEventExecution;
+
+import java.net.SocketAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * ClassName: SparrowServerInboundHandler
+ * Description:
+ * Date:2024/8/9
+ *
+ * @author ThierrySquirrel
+ * @since JDK21
+ **/
+public class SparrowServerInboundHandler implements HummingbirdHandler<SparrowRequestContext> {
+
+    private static final Logger logger = Logger.getLogger(SparrowServerInboundHandler.class.getName());
+
+
+    @Override
+    public void channelMessage(SocketChannelFacade<SparrowRequestContext> socketChannelFacade, SparrowRequestContext message) {
+        SparrowServerEventExecution.event(socketChannelFacade, message);
+    }
+
+    @Override
+    public void channelTimeout(SocketChannelFacade<SparrowRequestContext> socketChannelFacade) {
+        logger.log(Level.INFO, "channelTimeout");
+        socketChannelFacade.close();
+    }
+
+    @Override
+    public void channelClose(SocketAddress remoteAddress, SocketAddress localAddress) {
+        logger.log(Level.INFO, "channelClose");
+    }
+}

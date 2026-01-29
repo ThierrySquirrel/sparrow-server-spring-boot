@@ -24,7 +24,6 @@ package io.github.thierrysquirrel.sparrow.server.init.core.constant;
  * @since JDK21
  **/
 public final class FlushTimeoutMessageInitConstant {
-    public static final int INITIAL_DELAY = 0;
     public static final int DELAY = 128;
 
     private FlushTimeoutMessageInitConstant() {

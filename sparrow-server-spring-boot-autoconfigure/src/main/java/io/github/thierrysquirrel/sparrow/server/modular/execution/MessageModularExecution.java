@@ -15,9 +15,11 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.modular.execution;
 
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowMessage;
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.SparrowRequestContext;
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.builder.SparrowRequestContextBuilder;
+import io.github.thierrysquirrel.hummingbird.core.facade.SocketChannelFacade;
+import io.github.thierrysquirrel.jellyfish.container.JellyfishContainer;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.SparrowMessage;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.SparrowRequestContext;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.builder.SparrowRequestContextBuilder;
 import io.github.thierrysquirrel.sparrow.server.core.container.ConsumerMessageQuery;
 import io.github.thierrysquirrel.sparrow.server.core.container.ProducerMessageQuery;
 import io.github.thierrysquirrel.sparrow.server.database.mapper.entity.SparrowMessageEntity;
@@ -25,10 +27,12 @@ import io.github.thierrysquirrel.sparrow.server.database.mapper.entity.builder.S
 import io.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
 import io.github.thierrysquirrel.sparrow.server.database.service.core.container.DatabaseReadStateContainer;
 import io.github.thierrysquirrel.sparrow.server.database.service.core.execution.SparrowMessageServiceExecution;
-import io.netty.channel.ChannelHandlerContext;
 import org.springframework.util.ObjectUtils;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * ClassName: MessageModularExecution
@@ -39,6 +43,8 @@ import java.util.List;
  * @since JDK21
  **/
 public class MessageModularExecution {
+    private static final Logger logger = Logger.getLogger(MessageModularExecution.class.getName());
+
     private MessageModularExecution() {
     }
 
@@ -52,20 +58,32 @@ public class MessageModularExecution {
         SparrowMessageServiceExecution.asyncSaveAll(sparrowMessageService, messageList, topic);
     }
 
-    public static void pullMessage(ChannelHandlerContext ctx, SparrowMessageService sparrowMessageService, Integer requestOffset, String topic) {
-        List<SparrowMessage> message = ConsumerMessageQuery.getMessage(topic);
-        if (ObjectUtils.isEmpty(message)) {
+    public static void pullMessage(SocketChannelFacade<SparrowRequestContext> ctx, SparrowMessageService sparrowMessageService, Integer requestOffset, String topic) {
+
+        JellyfishContainer<List<SparrowMessage>> message = ConsumerMessageQuery.getMessage(topic);
+        if (message.isEmpty()) {
             boolean tryDatabaseRead = DatabaseReadStateContainer.tryDatabaseRead(topic);
             if (tryDatabaseRead) {
                 SparrowMessageServiceExecution.asyncFindAllByTopic(sparrowMessageService, topic);
             }
             return;
         }
-        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessageResponse(requestOffset, message);
-        ctx.writeAndFlush(sparrowRequestContext);
+        SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPullMessageResponse(requestOffset, message.getValue());
+
+        sendMessage(ctx, sparrowRequestContext);
+
     }
 
     public static void confirmConsumption(SparrowMessageService sparrowMessageService, List<Long> idList) {
         sparrowMessageService.updateAllByIdList(idList);
+    }
+
+    private static void sendMessage(SocketChannelFacade<SparrowRequestContext> ctx, SparrowRequestContext msg) {
+        try {
+            ctx.sendMessage(msg);
+        } catch (IOException e) {
+            String logMsg = "pullMessage Error";
+            logger.log(Level.WARNING, logMsg, e);
+        }
     }
 }

@@ -15,7 +15,7 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.annotation;
 
-import io.github.thierrysquirrel.sparrow.server.common.netty.domain.constant.Modular;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.constant.Modular;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;

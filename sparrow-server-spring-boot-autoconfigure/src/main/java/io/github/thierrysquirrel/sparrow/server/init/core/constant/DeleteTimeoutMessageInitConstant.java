@@ -25,7 +25,6 @@ package io.github.thierrysquirrel.sparrow.server.init.core.constant;
  **/
 public final class DeleteTimeoutMessageInitConstant {
 
-    public static final int INITIAL_DELAY = 0;
     public static final int DELAY = 1000;
 
     private DeleteTimeoutMessageInitConstant() {

@@ -16,8 +16,7 @@
 package io.github.thierrysquirrel.sparrow.server.init.core.thread.execution;
 
 import io.github.thierrysquirrel.sparrow.server.init.core.thread.AbstractSparrowServerInitializationThread;
-import io.github.thierrysquirrel.sparrow.server.netty.init.SparrowServerInit;
-import lombok.extern.slf4j.Slf4j;
+import io.github.thierrysquirrel.sparrow.server.hummingbird.init.SparrowServerInit;
 
 /**
  * ClassName: SparrowServerInitializationThreadExecution
@@ -27,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author ThierrySquirrel
  * @since JDK21
  **/
-@Slf4j
 public class SparrowServerInitializationThreadExecution extends AbstractSparrowServerInitializationThread {
     public SparrowServerInitializationThreadExecution(String sparrowServerUrl) {
         super(sparrowServerUrl);

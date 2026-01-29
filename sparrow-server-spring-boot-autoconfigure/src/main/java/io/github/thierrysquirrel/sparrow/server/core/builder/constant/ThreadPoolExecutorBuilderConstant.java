@@ -24,25 +24,11 @@ package io.github.thierrysquirrel.sparrow.server.core.builder.constant;
  * @since JDK21
  **/
 public final class ThreadPoolExecutorBuilderConstant {
-    public static final int KEEP_ALIVE_TIME = 0;
 
-    public static final String SPARROW_SERVER_EVENT = "SparrowServerEvent-%d";
     public static final int SPARROW_SERVER_EVENT_CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
-    public static final int SPARROW_SERVER_EVENT_MAXIMUM_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
 
-    public static final String SPARROW_SERVER_INITIALIZATION = "SparrowServerInitialization-%d";
-    public static final int SPARROW_SERVER_INITIALIZATION_CORE_POOL_SIZE = 1;
-    public static final int SPARROW_SERVER_INITIALIZATION_MAXIMUM_POOL_SIZE = 1;
-
-    public static final String ASYNC_SPARROW_MESSAGE_SERVICE = "AsyncSparrowMessageService-%d";
     public static final int ASYNC_SPARROW_MESSAGE_SERVICE_CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
-    public static final int ASYNC_SPARROW_MESSAGE_SERVICE_MAXIMUM_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
 
-    public static final String FLUSH_TIMEOUT_MESSAGE = "FlushTimeoutMessage-%d";
-    public static final int FLUSH_TIMEOUT_MESSAGE_CORE_POOL_SIZE = 1;
-
-    public static final String DELETE_TIMEOUT_MESSAGE = "DeleteTimeoutMessage-%d";
-    public static final int DELETE_TIMEOUT_MESSAGE_CORE_POOL_SIZE = 1;
 
     private ThreadPoolExecutorBuilderConstant() {
     }

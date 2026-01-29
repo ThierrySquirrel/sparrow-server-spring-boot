@@ -15,10 +15,10 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.core.constant;
 
+import io.github.thierrysquirrel.jellyfish.thread.pool.ThreadPool;
+import io.github.thierrysquirrel.jellyfish.thread.scheduled.one.ThreadScheduledOne;
 import io.github.thierrysquirrel.sparrow.server.core.builder.ThreadPoolExecutorBuilder;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * ClassName: ThreadPoolExecutorConstant
@@ -30,11 +30,10 @@ import java.util.concurrent.ThreadPoolExecutor;
  **/
 public final class ThreadPoolExecutorConstant {
 
-    public static final ThreadPoolExecutor SPARROW_SERVER_EVENT = ThreadPoolExecutorBuilder.builderSparrowServerEventThreadPoolExecutor();
-    public static final ThreadPoolExecutor SPARROW_SERVER_INITIALIZATION = ThreadPoolExecutorBuilder.builderSparrowServerInitializationThreadPoolExecutor();
-    public static final ThreadPoolExecutor ASYNC_SPARROW_MESSAGE_SERVICE = ThreadPoolExecutorBuilder.builderAsyncSparrowMessageServiceThreadPoolExecutor();
-    public static final ScheduledThreadPoolExecutor FLUSH_TIMEOUT_MESSAGE = ThreadPoolExecutorBuilder.builderFlushTimeoutMessageThreadPoolExecutor();
-    public static final ScheduledThreadPoolExecutor DELETE_TIMEOUT_MESSAGE = ThreadPoolExecutorBuilder.builderDeleteTimeoutMessageThreadPoolExecutor();
+    public static final ThreadPool SPARROW_SERVER_EVENT = ThreadPoolExecutorBuilder.builderSparrowServerEventThreadPoolExecutor();
+    public static final ThreadPool ASYNC_SPARROW_MESSAGE_SERVICE = ThreadPoolExecutorBuilder.builderAsyncSparrowMessageServiceThreadPoolExecutor();
+    public static final ThreadScheduledOne FLUSH_TIMEOUT_MESSAGE = ThreadPoolExecutorBuilder.builderFlushTimeoutMessageThreadPoolExecutor();
+    public static final ThreadScheduledOne DELETE_TIMEOUT_MESSAGE = ThreadPoolExecutorBuilder.builderDeleteTimeoutMessageThreadPoolExecutor();
 
     private ThreadPoolExecutorConstant() {
     }
