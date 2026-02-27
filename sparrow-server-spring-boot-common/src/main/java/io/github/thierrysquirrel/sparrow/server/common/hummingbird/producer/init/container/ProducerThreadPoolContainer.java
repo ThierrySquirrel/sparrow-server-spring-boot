@@ -28,12 +28,13 @@ import io.github.thierrysquirrel.jellyfish.thread.pool.ThreadPool;
  * @since JDK21
  **/
 public class ProducerThreadPoolContainer {
-    private static final ConcurrencyHashMap<String,ThreadPool> THREAD_POOL_MAP = new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2);
+    private static final ConcurrencyHashMap<String, ConcurrencyHashMap<String, ThreadPool>> THREAD_POOL_MAP = new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2);
 
     private ProducerThreadPoolContainer() {
     }
 
-    public static ThreadPool getThreadPool(String url) {
-        return THREAD_POOL_MAP.getIfAbsent(url,key->new ThreadPool(1));
+    public static ThreadPool getThreadPool(String topic, String url) {
+        return THREAD_POOL_MAP.getIfAbsent(topic, key -> new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2))
+                .getIfAbsent(url, key -> new ThreadPool(1));
     }
 }

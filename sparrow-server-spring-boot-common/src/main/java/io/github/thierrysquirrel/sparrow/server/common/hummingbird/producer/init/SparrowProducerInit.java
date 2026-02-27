@@ -34,11 +34,13 @@ import io.github.thierrysquirrel.sparrow.server.common.hummingbird.producer.init
  * @since JDK21
  **/
 public class SparrowProducerInit {
+    private final String topic;
     private final String url;
     private HummingbirdClientInit<SparrowRequestContext> clientInit;
     private SocketChannelFacade<SparrowRequestContext> connect;
 
-    public SparrowProducerInit(String url) {
+    public SparrowProducerInit(String topic,String url) {
+        this.topic = topic;
         this.url = url;
     }
 
@@ -54,7 +56,7 @@ public class SparrowProducerInit {
     }
 
     private void initConnect() throws Exception {
-        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ProducerThreadPoolContainer.getThreadPool(url), url,
+        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ProducerThreadPoolContainer.getThreadPool(topic,url), url,
                 IdleStateHandlerConstant.OTHER_TIMEOUT, IdleStateHandlerConstant.CLIENT_WRITE_TIMEOUT,
                 new SparrowDecoder(), new SparrowEncoder(), new SparrowProducerInboundHandler());
         connect = clientInit.connect();

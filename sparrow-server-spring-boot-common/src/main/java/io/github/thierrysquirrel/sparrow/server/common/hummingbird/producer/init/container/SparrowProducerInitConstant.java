@@ -15,10 +15,9 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.common.hummingbird.producer.init.container;
 
+import io.github.thierrysquirrel.jellyfish.concurrency.map.hash.ConcurrencyHashMap;
 import io.github.thierrysquirrel.sparrow.server.common.hummingbird.producer.init.SparrowProducerInit;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * ClassName: SparrowProducerInitConstant
@@ -29,12 +28,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since JDK21
  **/
 public class SparrowProducerInitConstant {
-    private static final Map<String, SparrowProducerInit> SPARROW_PRODUCER_INIT = new ConcurrentHashMap<>();
+    private static final ConcurrencyHashMap<String, ConcurrencyHashMap<String, SparrowProducerInit>> SPARROW_PRODUCER_INIT = new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2);
 
     private SparrowProducerInitConstant() {
     }
 
-    public static SparrowProducerInit getSparrowProducerInit(String url) {
-        return SPARROW_PRODUCER_INIT.computeIfAbsent(url, SparrowProducerInit::new);
+    public static SparrowProducerInit getSparrowProducerInit(String topic, String url) {
+        return SPARROW_PRODUCER_INIT.getIfAbsent(topic, key -> new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2))
+                .getIfAbsent(url, key -> new SparrowProducerInit(topic, url));
     }
 }

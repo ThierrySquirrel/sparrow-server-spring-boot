@@ -35,11 +35,13 @@ import io.github.thierrysquirrel.sparrow.server.common.hummingbird.handler.const
  * @since JDK21
  **/
 public class SparrowConsumerInit {
+    private final String topic;
     private final String url;
     private HummingbirdClientInit<SparrowRequestContext> clientInit;
     private SocketChannelFacade<SparrowRequestContext> connect;
 
-    public SparrowConsumerInit(String url) {
+    public SparrowConsumerInit(String topic,String url) {
+        this.topic = topic;
         this.url = url;
     }
 
@@ -54,7 +56,7 @@ public class SparrowConsumerInit {
     }
 
     private void initConnect() throws Exception {
-        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ConsumerThreadPoolContainer.getThreadPool(url), url,
+        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ConsumerThreadPoolContainer.getThreadPool(topic,url), url,
                 IdleStateHandlerConstant.OTHER_TIMEOUT, IdleStateHandlerConstant.CLIENT_WRITE_TIMEOUT,
                 new SparrowDecoder(), new SparrowEncoder(), new SparrowConsumerInboundHandler());
         connect = clientInit.connect();

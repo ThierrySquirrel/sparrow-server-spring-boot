@@ -31,7 +31,7 @@ public class SparrowConsumerCheckFactoryExecution {
     }
 
     public static SparrowMessageBatch pullMessage(String url, String topic) {
-        boolean isFail = SparrowConsumerCheckFactory.consumptionTimeoutIdList(url);
+        boolean isFail = SparrowConsumerCheckFactory.consumptionTimeoutIdList(topic,url);
         if (isFail) {
             return null;
         }

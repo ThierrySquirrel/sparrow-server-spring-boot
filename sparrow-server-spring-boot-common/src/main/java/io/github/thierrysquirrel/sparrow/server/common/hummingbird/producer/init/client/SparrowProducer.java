@@ -42,7 +42,7 @@ public class SparrowProducer {
 
     public void sendMessage(byte[] message) {
         try {
-            SocketChannelFacade<SparrowRequestContext> channel = SparrowProducerInitConstant.getSparrowProducerInit(url).init();
+            SocketChannelFacade<SparrowRequestContext> channel = SparrowProducerInitConstant.getSparrowProducerInit(topic,url).init();
             SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderPostMessageRequest(topic, message);
             channel.sendMessage(sparrowRequestContext);
         } catch (Exception e) {

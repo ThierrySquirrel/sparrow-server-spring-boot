@@ -43,7 +43,7 @@ public class SparrowConsumerFactoryExecution {
             if (idList.isEmpty()) {
                 return;
             }
-            SparrowConsumerFactory.confirmConsumption(url, idList);
+            SparrowConsumerFactory.confirmConsumption(topic,url, idList);
         }
     }
 }

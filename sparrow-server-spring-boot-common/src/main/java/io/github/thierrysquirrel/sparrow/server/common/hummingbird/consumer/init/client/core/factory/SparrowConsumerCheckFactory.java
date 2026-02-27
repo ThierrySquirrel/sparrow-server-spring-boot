@@ -51,12 +51,12 @@ public class SparrowConsumerCheckFactory {
     }
 
 
-    public static boolean consumptionTimeoutIdList(String url) {
+    public static boolean consumptionTimeoutIdList(String topic,String url) {
         List<Long> idList = MessageIdQuery.pollTimeoutIdList(url);
         if (idList.isEmpty()) {
             return Boolean.FALSE;
         }
-        SocketChannelFacade<SparrowRequestContext> channel = initChannel(url);
+        SocketChannelFacade<SparrowRequestContext> channel = initChannel(topic,url);
         if (channel == null) {
             return Boolean.TRUE;
         }
@@ -81,7 +81,7 @@ public class SparrowConsumerCheckFactory {
 
     public static SparrowMessageBatch pullMessage(String url, String topic) {
 
-        SocketChannelFacade<SparrowRequestContext> channel = initChannel(url);
+        SocketChannelFacade<SparrowRequestContext> channel = initChannel(topic,url);
         if (channel == null) {
             return null;
         }
@@ -102,9 +102,9 @@ public class SparrowConsumerCheckFactory {
         return null;
     }
 
-    private static SocketChannelFacade<SparrowRequestContext> initChannel(String url) {
+    private static SocketChannelFacade<SparrowRequestContext> initChannel(String topic,String url) {
         try {
-            return SparrowConsumerInitConstant.getSparrowConsumerInit(url).init();
+            return SparrowConsumerInitConstant.getSparrowConsumerInit(topic,url).init();
         } catch (Exception e) {
             String logMsg = "initError";
             logger.log(Level.WARNING, logMsg, e);

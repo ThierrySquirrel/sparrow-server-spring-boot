@@ -49,8 +49,8 @@ public class SparrowConsumerFactory {
         return consumer;
     }
 
-    public static void confirmConsumption(String url, List<Long> idList) throws Exception {
-        SocketChannelFacade<SparrowRequestContext> channel = SparrowConsumerInitConstant.getSparrowConsumerInit(url).init();
+    public static void confirmConsumption(String topic,String url, List<Long> idList) throws Exception {
+        SocketChannelFacade<SparrowRequestContext> channel = SparrowConsumerInitConstant.getSparrowConsumerInit(topic,url).init();
         SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderConfirmConsumption(idList);
         try {
             channel.sendMessage(sparrowRequestContext);
