@@ -20,10 +20,10 @@ import io.github.thierrysquirrel.hummingbird.core.client.init.builder.Hummingbir
 import io.github.thierrysquirrel.hummingbird.core.facade.SocketChannelFacade;
 import io.github.thierrysquirrel.sparrow.server.common.hummingbird.coder.SparrowDecoder;
 import io.github.thierrysquirrel.sparrow.server.common.hummingbird.coder.SparrowEncoder;
-import io.github.thierrysquirrel.sparrow.server.common.hummingbird.consumer.init.constant.ConsumerThreadPoolContainer;
 import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.SparrowRequestContext;
 import io.github.thierrysquirrel.sparrow.server.common.hummingbird.handler.constant.IdleStateHandlerConstant;
 import io.github.thierrysquirrel.sparrow.server.common.hummingbird.producer.handler.SparrowProducerInboundHandler;
+import io.github.thierrysquirrel.sparrow.server.common.hummingbird.producer.init.container.ProducerThreadPoolContainer;
 
 /**
  * ClassName: SparrowProducerInit
@@ -54,7 +54,7 @@ public class SparrowProducerInit {
     }
 
     private void initConnect() throws Exception {
-        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ConsumerThreadPoolContainer.getThreadPool(), url,
+        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ProducerThreadPoolContainer.getThreadPool(url), url,
                 IdleStateHandlerConstant.OTHER_TIMEOUT, IdleStateHandlerConstant.CLIENT_WRITE_TIMEOUT,
                 new SparrowDecoder(), new SparrowEncoder(), new SparrowProducerInboundHandler());
         connect = clientInit.connect();

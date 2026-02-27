@@ -15,8 +15,9 @@
  **/
 package io.github.thierrysquirrel.sparrow.server.common.hummingbird.producer.init.container;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import io.github.thierrysquirrel.jellyfish.concurrency.map.hash.ConcurrencyHashMap;
+import io.github.thierrysquirrel.jellyfish.thread.pool.ThreadPool;
+
 
 /**
  * ClassName: ProducerEventLoopGroupContainer
@@ -27,13 +28,12 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @since JDK21
  **/
 public class ProducerThreadPoolContainer {
-
+    private static final ConcurrencyHashMap<String,ThreadPool> THREAD_POOL_MAP = new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2);
 
     private ProducerThreadPoolContainer() {
     }
 
-    public static ThreadPoolExecutor getThreadPool() {
-        return (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
-
+    public static ThreadPool getThreadPool(String url) {
+        return THREAD_POOL_MAP.getIfAbsent(url,key->new ThreadPool(1));
     }
 }

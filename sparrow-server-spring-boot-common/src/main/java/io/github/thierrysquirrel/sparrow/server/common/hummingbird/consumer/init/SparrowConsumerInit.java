@@ -54,7 +54,7 @@ public class SparrowConsumerInit {
     }
 
     private void initConnect() throws Exception {
-        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ConsumerThreadPoolContainer.getThreadPool(), url,
+        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ConsumerThreadPoolContainer.getThreadPool(url), url,
                 IdleStateHandlerConstant.OTHER_TIMEOUT, IdleStateHandlerConstant.CLIENT_WRITE_TIMEOUT,
                 new SparrowDecoder(), new SparrowEncoder(), new SparrowConsumerInboundHandler());
         connect = clientInit.connect();
