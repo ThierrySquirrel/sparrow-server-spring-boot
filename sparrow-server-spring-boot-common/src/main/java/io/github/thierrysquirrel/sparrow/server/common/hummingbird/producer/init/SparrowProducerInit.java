@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ import io.github.thierrysquirrel.sparrow.server.common.hummingbird.producer.init
 /**
  * ClassName: SparrowProducerInit
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public class SparrowProducerInit {
     private final String topic;
@@ -39,7 +39,7 @@ public class SparrowProducerInit {
     private HummingbirdClientInit<SparrowRequestContext> clientInit;
     private SocketChannelFacade<SparrowRequestContext> connect;
 
-    public SparrowProducerInit(String topic,String url) {
+    public SparrowProducerInit(String topic, String url) {
         this.topic = topic;
         this.url = url;
     }
@@ -56,7 +56,7 @@ public class SparrowProducerInit {
     }
 
     private void initConnect() throws Exception {
-        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ProducerThreadPoolContainer.getThreadPool(topic,url), url,
+        clientInit = HummingbirdClientInitBuilder.builderHummingbirdClientInit(ProducerThreadPoolContainer.getThreadPool(topic, url), url,
                 IdleStateHandlerConstant.OTHER_TIMEOUT, IdleStateHandlerConstant.CLIENT_WRITE_TIMEOUT,
                 new SparrowDecoder(), new SparrowEncoder(), new SparrowProducerInboundHandler());
         connect = clientInit.connect();

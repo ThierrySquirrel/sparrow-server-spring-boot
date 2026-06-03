@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,13 @@ package io.github.thierrysquirrel.sparrow.server.autoconfigure.constant;
 /**
  * ClassName: ScanConstant
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public final class ScanConstant {
     public static final String MODULAR_SCAN = "io.github.thierrysquirrel.sparrow.server.modular";
-    public static final String MAPPER_SCAN = "io.github.thierrysquirrel.sparrow.server.database.mapper";
 
     private ScanConstant() {
     }

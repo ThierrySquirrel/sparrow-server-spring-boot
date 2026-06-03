@@ -21,7 +21,7 @@ Sparrow Server Spring Book Edition
 
 保证消息一定能够发送到服务端,保证消息一定能够被消费  
 消息可重复发送验证,消息可重复消费  
-最终一致性  
+最终一致性
 
 ## Quick Start
 
@@ -30,7 +30,7 @@ Sparrow Server Spring Book Edition
 <dependency>
     <artifactId>sparrow-server-spring-boot-starter</artifactId>
     <groupId>io.github.thierrysquirrel</groupId>
-    <version>2.5.0.2-RELEASE</version>
+    <version>2.5.0.3-RELEASE</version>
 </dependency>
 ``` 
 
@@ -53,9 +53,9 @@ sparrow.server.url=127.0.0.1:6060 # 这是必须填写的，用于服务启动
 
 @SpringBootApplication
 public class SparrowServerApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(SparrowServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SparrowServerApplication.class, args);
+    }
 
 }
  ```

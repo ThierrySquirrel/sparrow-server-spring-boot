@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ import io.github.thierrysquirrel.jellyfish.thread.pool.ThreadPool;
 
 
 /**
- * ClassName: ProducerEventLoopGroupContainer
+ * ClassName: ProducerThreadPoolContainer
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public class ProducerThreadPoolContainer {
     private static final ConcurrencyHashMap<String, ConcurrencyHashMap<String, ThreadPool>> THREAD_POOL_MAP = new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2);

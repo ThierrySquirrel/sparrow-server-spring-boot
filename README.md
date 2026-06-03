@@ -21,7 +21,7 @@ The Cluster Is Determined By The Client And Can Connect To A Specified Number Of
 
 Ensure that the message can be sent to the server and that the message can be consumed  
 Messages can be sent repeatedly for verification, and messages can be consumed repeatedly  
-Final consistency  
+Final consistency
 
 ## Quick Start
 
@@ -30,7 +30,7 @@ Final consistency
 <dependency>
     <artifactId>sparrow-server-spring-boot-starter</artifactId>
     <groupId>io.github.thierrysquirrel</groupId>
-    <version>2.5.0.2-RELEASE</version>
+    <version>2.5.0.3-RELEASE</version>
 </dependency>
 ``` 
 
@@ -38,7 +38,7 @@ Final consistency
 
  ```properties
  ## application.properties
-server.port=8080 #端口
+server.port=8080 #port
 spring.h2.console.enabled=true #Open the H2 console
 spring.h2.console.path=/h2 #Access path of h2 controller
 spring.datasource.url=jdbc:h2:~/testDatasource #H2 database URL
@@ -53,9 +53,9 @@ sparrow.server.url=127.0.0.1:6060 #This is a mandatory field for service startup
 
 @SpringBootApplication
 public class SparrowServerApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(SparrowServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SparrowServerApplication.class, args);
+    }
 
 }
  ```

@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,10 +32,10 @@ import java.util.logging.Logger;
 /**
  * ClassName: SparrowConsumerFactory
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public class SparrowConsumerFactory {
     private static final Logger logger = Logger.getLogger(SparrowConsumerFactory.class.getName());
@@ -49,8 +49,8 @@ public class SparrowConsumerFactory {
         return consumer;
     }
 
-    public static void confirmConsumption(String topic,String url, List<Long> idList) throws Exception {
-        SocketChannelFacade<SparrowRequestContext> channel = SparrowConsumerInitConstant.getSparrowConsumerInit(topic,url).init();
+    public static void confirmConsumption(String topic, String url, List<Long> idList) throws Exception {
+        SocketChannelFacade<SparrowRequestContext> channel = SparrowConsumerInitConstant.getSparrowConsumerInit(topic, url).init();
         SparrowRequestContext sparrowRequestContext = SparrowRequestContextBuilder.builderConfirmConsumption(idList);
         try {
             channel.sendMessage(sparrowRequestContext);

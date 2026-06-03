@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,13 @@ import io.github.thierrysquirrel.sparrow.server.common.hummingbird.domain.Sparro
 import io.github.thierrysquirrel.sparrow.server.core.container.ConsumerMessageQuery;
 import io.github.thierrysquirrel.sparrow.server.core.container.constant.ConsumerMessageQueryConstant;
 import io.github.thierrysquirrel.sparrow.server.core.utils.DomainUtils;
-import io.github.thierrysquirrel.sparrow.server.database.mapper.SparrowMessageMapper;
+import io.github.thierrysquirrel.sparrow.server.database.mapper.SparrowMessageJdbcTemplate;
 import io.github.thierrysquirrel.sparrow.server.database.mapper.entity.SparrowMessageEntity;
 import io.github.thierrysquirrel.sparrow.server.database.service.core.constant.SparrowMessageServiceConstant;
 import io.github.thierrysquirrel.sparrow.server.database.service.core.container.DatabaseReadStateContainer;
 import io.github.thierrysquirrel.sparrow.server.database.service.core.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
@@ -34,23 +35,25 @@ import java.util.List;
 /**
  * ClassName: SparrowMessageService
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public class SparrowMessageService {
     @Autowired
-    private SparrowMessageMapper sparrowMessageMapper;
+    private JdbcTemplate jdbcTemplate;
 
     public void initSparrowMessageEntity() {
-        sparrowMessageMapper.initSparrowMessageEntity();
-        sparrowMessageMapper.initIndexTopic();
-        sparrowMessageMapper.initIndexIsDeleted();
+        SparrowMessageJdbcTemplate.initSparrowMessageEntity(jdbcTemplate);
+        SparrowMessageJdbcTemplate.initIndexTopic(jdbcTemplate);
+        SparrowMessageJdbcTemplate.initIndexIsDeleted(jdbcTemplate);
+
+
     }
 
     public void saveAll(List<SparrowMessageEntity> sparrowMessageEntityList, String topic) {
-        sparrowMessageMapper.saveAll(sparrowMessageEntityList);
+        SparrowMessageJdbcTemplate.saveAll(jdbcTemplate, sparrowMessageEntityList);
 
         List<SparrowMessage> sparrowMessagesList = DomainUtils.convertList(sparrowMessageEntityList, SparrowMessage.class);
         ConsumerMessageQuery.putMessage(topic, sparrowMessagesList);
@@ -58,11 +61,11 @@ public class SparrowMessageService {
 
     public void deleteAllTimeoutMessage() {
         Date gmtModified = DateUtils.getPastTime(SparrowMessageServiceConstant.RETENTION_TIME_DAY);
-        sparrowMessageMapper.deleteAllByIsDeletedAndGmtCreateLessThanEqual(SparrowMessageServiceConstant.IS_DELETE, gmtModified, SparrowMessageServiceConstant.DELETE_MESSAGE_NUMBER);
+        SparrowMessageJdbcTemplate.deleteAllByIsDeletedAndGmtCreateLessThanEqual(jdbcTemplate, SparrowMessageServiceConstant.IS_DELETE, gmtModified, SparrowMessageServiceConstant.DELETE_MESSAGE_NUMBER);
     }
 
     public void findAllByTopic(String topic) {
-        List<SparrowMessageEntity> sparrowMessageEntityList = sparrowMessageMapper.findAllByTopicAndIsDeleted(topic, SparrowMessageServiceConstant.IS_NOT_DELETE, SparrowMessageServiceConstant.FIND_ALL_MESSAGE_NUMBER);
+        List<SparrowMessageEntity> sparrowMessageEntityList = SparrowMessageJdbcTemplate.findAllByTopicAndIsDeleted(jdbcTemplate, topic, SparrowMessageServiceConstant.IS_NOT_DELETE, SparrowMessageServiceConstant.FIND_ALL_MESSAGE_NUMBER);
         if (ObjectUtils.isEmpty(sparrowMessageEntityList)) {
             return;
         }
@@ -74,7 +77,7 @@ public class SparrowMessageService {
     }
 
     public void updateAllByIdList(List<Long> idList) {
-        sparrowMessageMapper.updateAllById(idList, SparrowMessageServiceConstant.IS_DELETE);
+        SparrowMessageJdbcTemplate.updateAllById(jdbcTemplate, idList, SparrowMessageServiceConstant.IS_DELETE);
     }
 
     public static void listPartition(List<SparrowMessage> listAll, String topic) {

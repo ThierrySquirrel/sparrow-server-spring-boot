@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,10 @@ import java.util.List;
 /**
  * ClassName: SparrowRequestContextBuilder
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public class SparrowRequestContextBuilder {
     private SparrowRequestContextBuilder() {
@@ -39,7 +39,8 @@ public class SparrowRequestContextBuilder {
         sparrowRequestContext.setEvent(Event.POST_MESSAGE);
 
         SparrowRequest sparrowRequest = new SparrowRequest();
-        sparrowRequest.setParameters(new Object[]{topic, message});
+        sparrowRequest.setParameters(new Object[]{topic});
+        sparrowRequest.setMessage(message);
 
         sparrowRequestContext.setSparrowRequest(sparrowRequest);
         return sparrowRequestContext;
@@ -72,7 +73,8 @@ public class SparrowRequestContextBuilder {
         sparrowRequestContext.setEvent(Event.CONFIRM_CONSUMPTION);
 
         SparrowRequest sparrowRequest = new SparrowRequest();
-        sparrowRequest.setParameters(new Object[]{idList});
+
+        sparrowRequest.setMessageIds(idList);
 
         sparrowRequestContext.setSparrowRequest(sparrowRequest);
         return sparrowRequestContext;

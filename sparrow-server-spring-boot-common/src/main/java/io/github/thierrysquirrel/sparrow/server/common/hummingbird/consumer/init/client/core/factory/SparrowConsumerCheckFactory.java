@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,10 +39,10 @@ import java.util.logging.Logger;
 /**
  * ClassName: SparrowConsumerCheckFactory
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public class SparrowConsumerCheckFactory {
     private static final Logger logger = Logger.getLogger(SparrowConsumerCheckFactory.class.getName());
@@ -51,12 +51,12 @@ public class SparrowConsumerCheckFactory {
     }
 
 
-    public static boolean consumptionTimeoutIdList(String topic,String url) {
+    public static boolean consumptionTimeoutIdList(String topic, String url) {
         List<Long> idList = MessageIdQuery.pollTimeoutIdList(url);
         if (idList.isEmpty()) {
             return Boolean.FALSE;
         }
-        SocketChannelFacade<SparrowRequestContext> channel = initChannel(topic,url);
+        SocketChannelFacade<SparrowRequestContext> channel = initChannel(topic, url);
         if (channel == null) {
             return Boolean.TRUE;
         }
@@ -81,7 +81,7 @@ public class SparrowConsumerCheckFactory {
 
     public static SparrowMessageBatch pullMessage(String url, String topic) {
 
-        SocketChannelFacade<SparrowRequestContext> channel = initChannel(topic,url);
+        SocketChannelFacade<SparrowRequestContext> channel = initChannel(topic, url);
         if (channel == null) {
             return null;
         }
@@ -102,9 +102,9 @@ public class SparrowConsumerCheckFactory {
         return null;
     }
 
-    private static SocketChannelFacade<SparrowRequestContext> initChannel(String topic,String url) {
+    private static SocketChannelFacade<SparrowRequestContext> initChannel(String topic, String url) {
         try {
-            return SparrowConsumerInitConstant.getSparrowConsumerInit(topic,url).init();
+            return SparrowConsumerInitConstant.getSparrowConsumerInit(topic, url).init();
         } catch (Exception e) {
             String logMsg = "initError";
             logger.log(Level.WARNING, logMsg, e);

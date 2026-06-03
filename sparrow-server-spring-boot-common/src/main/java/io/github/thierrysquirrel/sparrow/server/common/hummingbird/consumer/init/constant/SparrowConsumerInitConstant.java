@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,10 @@ import io.github.thierrysquirrel.sparrow.server.common.hummingbird.consumer.init
 /**
  * ClassName: SparrowConsumerInitConstant
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public class SparrowConsumerInitConstant {
     private static final ConcurrencyHashMap<String, ConcurrencyHashMap<String, SparrowConsumerInit>> SPARROW_PRODUCER_INIT = new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2);
@@ -34,7 +34,7 @@ public class SparrowConsumerInitConstant {
     }
 
     public static SparrowConsumerInit getSparrowConsumerInit(String topic, String url) {
-        return SPARROW_PRODUCER_INIT.getIfAbsent(topic,key->new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2))
-                .getIfAbsent(url,key -> new SparrowConsumerInit(topic, url));
+        return SPARROW_PRODUCER_INIT.getIfAbsent(topic, key -> new ConcurrencyHashMap<>(Runtime.getRuntime().availableProcessors() * 2))
+                .getIfAbsent(url, key -> new SparrowConsumerInit(topic, url));
     }
 }

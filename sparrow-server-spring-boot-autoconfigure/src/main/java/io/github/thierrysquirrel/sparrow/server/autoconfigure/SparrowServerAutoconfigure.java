@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.github.thierrysquirrel.sparrow.server.autoconfigure;
 import io.github.thierrysquirrel.sparrow.server.autoconfigure.constant.ScanConstant;
 import io.github.thierrysquirrel.sparrow.server.database.service.SparrowMessageService;
 import io.github.thierrysquirrel.sparrow.server.init.*;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,15 +27,14 @@ import org.springframework.context.annotation.Configuration;
 /**
  * ClassName: SparrowServerAutoconfigure
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 @Configuration
 @EnableConfigurationProperties(SparrowServerProperties.class)
 @ComponentScan(ScanConstant.MODULAR_SCAN)
-@MapperScan(ScanConstant.MAPPER_SCAN)
 public class SparrowServerAutoconfigure {
 
     @Bean

@@ -1,5 +1,5 @@
 /**
- * Copyright 2024/8/9 ThierrySquirrel
+ * Copyright 2026/6/4 ThierrySquirrel
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@ import java.util.stream.Collectors;
 /**
  * ClassName: ModularMethodParameterFactory
  * Description:
- * Date:2024/8/9
+ * Date:2026/6/4
  *
  * @author ThierrySquirrel
- * @since JDK21
+ * @since JDK25
  **/
 public class ModularMethodParameterFactory {
     private ModularMethodParameterFactory() {
@@ -43,7 +43,19 @@ public class ModularMethodParameterFactory {
         SparrowRequest sparrowRequest = msg.getSparrowRequest();
 
         Object[] parameters = sparrowRequest.getParameters();
-        parameter.addAll(Arrays.stream(parameters).collect(Collectors.toList()));
+
+        if (parameters != null && parameters.length != 0) {
+            parameter.addAll(Arrays.stream(parameters).toList());
+        }
+
+        byte[] sparrowRequestMessage = sparrowRequest.getMessage();
+        if (sparrowRequestMessage != null && sparrowRequestMessage.length != 0) {
+            parameter.add(sparrowRequest.getMessage());
+        }
+        List<Long> messageIds = sparrowRequest.getMessageIds();
+        if (messageIds != null && !messageIds.isEmpty()) {
+            parameter.add(messageIds);
+        }
 
         return parameter.toArray();
     }
